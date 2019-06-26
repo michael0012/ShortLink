@@ -1,0 +1,103 @@
+		#description{
+			text-align: center;
+			font-weight: lighter;
+			font-size: 36px;
+		}
+		section{
+			margin: 0 auto;
+		  	max-width: 960px;
+		  	padding: 0 10px;
+		}
+		.form-row{
+		  margin: 5px auto;
+		  padding: 10px 0px;
+		  display: flex;
+		  justify-content: center;
+		  flex-wrap: wrap;
+		  font-weight: 400;
+		}
+		.label-holder{
+			width: 40%;
+			max-width: 95%;
+			text-align: right;
+			padding: 0 8px;
+			line-height: 1.6;
+			display: inline-flex;
+			flex-direction: column;
+			justify-content: center;
+			font-size: 18px;
+		}
+		.input-holder{
+			display: flex;
+		  	flex-direction: column;
+		  	justify-content: center;
+		  	min-width: 50%;
+		}
+		
+		.input-holder-type{
+			height: 32px;
+			font-size: 22px;
+			max-width: 95%;
+			width: 370px;
+		}
+		
+		.submit-row{
+			text-align: center;
+		}
+		
+		.error-input{
+			color: red;
+			margin-top: 5px;
+		}
+		
+		textarea{
+			resize: none;
+			height: 180px;
+			width: 360px;
+			max-width: 95%;
+			font-size: 22px;
+		}
+		
+		#button{
+			border: none;
+			padding: 14px 30px;
+			margin: 22px;
+			background-color: black;
+			color: white;
+			font-weight: bold;
+			font-size: 20px;
+			cursor: pointer;
+		}
+
+		#button:hover{
+			cursor: pointer;
+		}
+		
+		/* media query 721px*/
+		@media screen and (max-width: 721px) {
+		
+			.form-row{
+				display: block;
+			}
+			
+			.label-holder{
+				text-align: left;
+				display: block;
+				width: 95%;
+				margin: 0 auto;
+			}
+			
+			.input-holder{
+				margin: 10px 0px;
+			}
+			
+			
+			.input-holder-type{
+				width: 100%;
+			}
+			
+			textarea{
+				margin: 0 auto;
+			}
+			
+		}

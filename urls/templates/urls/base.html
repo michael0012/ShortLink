@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>{% block title %}{% endblock %}</title>
+		<link rel="stylesheet" href="{% static 'urls/css/style.css' %}" >
+		<link rel="shortcut icon" type="image/png" href="{% static 'urls/icons/favicon.ico' %}"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+		{% block head %}
+		{% endblock %}
+	</head>
+	<body>
+	
+	<header class="fixed-nav" id="header">
+			<div class="navbar">
+				<div class="logo">
+					<div class="logo-sub" >
+					<a href="{% url 'index' %}">
+						<div class="logo-image-holder">
+							<img src="{% static 'urls/icons/nav-image.png' %}" alt="Logo">
+						</div>
+					</a>
+					</div>
+					<div id="ham" onclick="displayNav()">
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+				</div>
+				<nav id="nav-bar">
+					<ul class="nav-list">
+						<a href="{% url 'contact' %}" class="nav-link"><li>Contact</li></a>
+						{% if user.is_authenticated %}
+						<a href="{% url 'dashboard' %}" class="nav-link"><li>Dashboard</li></a>
+						<a href="{% url 'logout' %}" class="nav-link"><li>Log Out</li></a>
+						{% else %}
+						<a href="{% url 'signup' %}" class="nav-link"><li>Sign Up</li></a>
+						<a href="{% url 'login' %}" class="nav-link"><li>Log In</li></a>
+						{% endif %}
+					</ul>
+				</nav>
+			</div>
+		</header>
+		
+		{% block content %}
+		{% endblock %}
+		<script>
+			function displayNav(){
+				var nav =  document.getElementById('ham');
+				if(nav.className !="open"){
+					nav.className = "open";
+					document.getElementById('nav-bar').style.display = "block";
+				}
+				else{
+					nav.className ="";
+					document.getElementById('nav-bar').style.display = "none";
+				}
+				return;
+			}
+		</script>
+	</body>
+</html>

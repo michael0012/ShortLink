@@ -1,0 +1,40 @@
+{% extends 'urls/base.html' %}
+	{% load static %}
+	{% block title %}Url Shortener{% endblock %}
+	{% block head %}
+		<link rel="stylesheet" href="{% static 'urls/css/signup.css' %}" >
+	{% endblock %}
+	{% block content %}
+	<main>
+		<section>
+			<h1 id="description"> Contact</h1>
+			<form method="post">
+			  {% csrf_token %}
+			  
+			{% for field in form %}  
+			  <div class="form-row">
+			  
+			  	<div class="label-holder">
+					<label for="name">{{field.label}}</label>
+				</div>
+				
+				<div class="input-holder">
+					{{field}}
+					
+					{% if field.errors %}
+						{% for error in field.errors %}
+							<div class="error-input">{{error|escape}}</div>
+						{% endfor %}
+					{% endif %}
+				</div>
+			  </div>
+			  {% endfor %}
+			  
+			  
+			  <div class="submit-row">
+			  	<input id="button" type="submit" value="Enter">
+			  </div>
+			 </form>
+		</section>
+	</main>
+	{% endblock %}

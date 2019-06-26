@@ -1,0 +1,77 @@
+.intro-url{
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 47px;
+	font-weight: 400;
+	font-size: 38px;
+}
+
+.row-link{
+	text-decoration:none;
+}
+.table-div {
+	display:table;
+	margin: 0 auto;
+	border-collapse: collapse;
+  	border-spacing: 0;
+  	width: 100%;
+  	border: 1px solid #ddd;
+  	max-width: 960px;
+  	margin-bottom: 20px;
+}
+.row-div {
+	display:table-row; 
+}
+.item-div { 
+	display:table-cell; 
+}
+
+.row-div-link:hover{
+	background-color: black;
+	color: white;
+}
+
+.row-div, .item-div{
+	text-align: left;
+  	padding: 8px;
+}
+
+/* for urlinfo */
+
+.change-url{
+	margin: 20px 0px;
+	padding: 5px 10px;
+	display: block;
+	text-align: center;
+}
+
+.submit-change-url{
+	border: none;
+	padding: 14px 30px;
+	margin: 22px;
+	background-color: black;
+	color: white;
+	font-weight: bold;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.centered{
+	text-align: center;
+}
+
+
+.edit-link{
+	color:blue; 
+	text-decoration: underline;
+}
+
+.edit-link:hover{
+	cursor: pointer;
+	color: black;
+}
+
+#editDateTime{
+	display: none;
+}
+

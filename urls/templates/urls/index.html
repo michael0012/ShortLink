@@ -1,0 +1,67 @@
+{% extends 'urls/base.html' %}
+	{% load static %}
+		{% block title %}Url Shortener{% endblock %}
+	{% block head %}
+		<link rel="stylesheet" href="{% static 'urls/css/home_page.css' %}" >
+	{% endblock %}
+	{% block content %}
+	<main>
+		<h1 id="intro-url">Url Shortener</h1>
+		<form action="/" method="post" id="index-form"> 
+			{% csrf_token %}
+			{{ form.url_entered }}
+			{% if user.is_authenticated %}
+			<div id="centered">
+				<span class="edit-link" onClick="showTimeDateEdit()" >
+					Add Expiration Time
+				</span>
+			</div>
+			<div id="timedate-holder">
+				<h2 class="timedate-title">
+					Enter Time and Date until disabled
+				</h2>
+				
+				<div class="datetime-display">
+					{{timedateform.date_entered}}
+					{{timedateform.time_entered}}
+					{{timedateform.time_zone_entered}}
+				</div>
+			</div>
+			{% endif %}
+			{% if form.errors or timedateform.errors %}
+				<div class="error-messages">
+				{% for field in form %}
+					{% for error in field.errors%}
+						<div class="error-massage">
+							Error: {{error}}!
+						</div>
+					{% endfor %}
+				{% endfor %}
+				
+				{% for field in timedateform %}
+					{% for error in field.errors%}
+						<div class="error-massage">
+							Error: {{error}}!
+						</div>
+					{% endfor %}
+				{% endfor %}
+				</div>
+			{% endif %}
+			<input id="button" type="submit" value="Enter">
+		</form>
+		
+	</main>
+	<script>
+		(function(){
+			var timeZoneHolder = document.getElementById("time_zone");
+			if(timeZoneHolder)
+				timeZoneHolder.value = new Date().getTimezoneOffset();
+		})();
+		function showTimeDateEdit(){
+			document.getElementById("centered").style.display ="none";
+			document.getElementById("timedate-holder").style.display = "block";
+		}
+		
+	</script>
+	{% endblock %}
+	

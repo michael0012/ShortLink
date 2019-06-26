@@ -1,0 +1,180 @@
+{% extends 'urls/base.html' %}
+	{% load static %}
+	{% block title %}Url Shortener{% endblock %}
+	{% block head %}
+		<link rel="stylesheet" href="{% static 'urls/css/signup.css' %}" >
+		<link rel="stylesheet" href="{% static 'urls/css/dashboard.css' %}" >
+	{% endblock %}
+	{% block content %}
+	
+	<main>
+		<h1 class="intro-url"> Url Info</h1>
+		<section>
+			<div class="display-info">
+				<div class="form-row">
+					<div class="label-holder">
+						Full Url
+					</div>
+					
+					<div class="input-holder">
+						{{url_info.full_url| escape}}
+					</div>
+				</div>
+				
+				<div class="form-row">
+					<div class="label-holder">
+						Shorten Url
+					</div>
+					
+					<div class="input-holder">
+						{{url_info.short_url| escape}}
+					</div>
+				</div>
+				
+				<div class="form-row ">
+					<div class="label-holder">
+						Time Created
+					</div>
+					
+					<div class="input-holder time-format">
+						{{url_info.time_created}}
+					</div>
+				</div>
+				
+				<div class="form-row">
+					<div class="label-holder">
+						Time of deletion
+					</div>
+					
+					<div class="input-holder">
+						<div id="delete-holder">
+							<div id="deleteTimeDate" class="time-format">
+							{{url_info.time_deactive| escape}}
+							</div>
+							<div class="centered">
+								<span class="edit-link" onClick="showTimeDateEdit()" >
+									Edit
+								</span>
+							</div>
+						</div>
+						<form id="editDateTime" method="post">
+							{% csrf_token %}
+							<div class="datetime-display" >
+								{{timedateform.date_entered}}
+								{{timedateform.time_entered}}
+								{{timedateform.time_zone_entered}}
+							</div>
+							<input type="submit" name="timedata" value="Save"/>
+						</form>
+						{% for field in timedateform %}
+							{% for error in field.errors%}
+								<div class="error-massage">
+									Error: {{error}}!
+								</div>
+							{% endfor %}
+						{% endfor %}
+					</div>
+				</div>
+				
+				<div class="form-row">
+					<div class="label-holder">
+						Clicks
+					</div>
+					
+					<div class="input-holder">
+						{{url_info.clicks| escape}}
+					</div>
+				</div>
+				
+				<div class="form-row">
+					<div class="label-holder">
+						Active
+					</div>
+					
+					<div class="input-holder">
+						{{url_info.is_active| escape}}
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="table-title">
+				<h1 class="intro-url">Clickers</h1>
+			</div>
+			
+			<div class="table-div">
+			
+				<div class="row-div">
+					<div class="item-div">
+						IP Address 
+					</div>
+					
+					<div class="item-div">
+						Time Clicked
+					</div>
+					
+				</div>
+				{% for click in clickers %}
+				<div class="row-div row-div-link" onclick="location.href='/info/{{url_info.short_url}}/{{forloop.counter}}';" style="cursor:pointer;">
+					<div class="item-div">
+						{{click.ip_address}} 
+					</div>
+					
+					<div class="item-div time-format">
+						{{click.time_clicked}} 
+					</div>
+					
+				</div>
+				{% endfor %}
+			</div>
+			
+		</section>
+		<form method="post" class="change-url">
+			{% csrf_token %}
+			{{form.input_check}}
+			
+			{% if input_val %}
+			<input value="Disable URL" class="submit-change-url" type="submit">
+			{% else %}
+			<input value="Enable URL" class="submit-change-url" type="submit">
+			{%endif%}
+		</form>
+	</main>
+	<script>
+		(function(){
+			var time_elements = document.getElementsByClassName('time-format');
+			for(var i=0;i<time_elements.length;i++){
+				if(time_elements[i].innerText != "None")
+					time_elements[i].innerText = ( new Date(time_elements[i].innerText)).toString();
+			}
+			
+		})();
+		(function(){
+			var timeZoneHolder = document.getElementById("time_zone");
+			if(timeZoneHolder)
+				timeZoneHolder.value = new Date().getTimezoneOffset();
+		})();
+		
+		function showTimeDateEdit(){
+			// holds the form for editing datetime
+			var formEditer = document.getElementById("editDateTime");
+			// holds the tag to trigger display of form
+			var deleteHolder = document.getElementById("delete-holder");
+			// value of disable timedate for url
+			var innerDateTime = document.getElementById("deleteTimeDate").innerText;
+			if(innerDateTime !== "None"){
+				var delTimeDate = new Date(innerDateTime);
+				//removing time offset from timezone
+				var userTimezoneOffset = delTimeDate.getTimezoneOffset() * 60000;
+				delTimeDate = new Date(delTimeDate - userTimezoneOffset);
+				//edit date to string value
+				document.getElementById("id_date_entered").value = delTimeDate.toISOString().substring(0,10);
+				//edit time to string value 
+				document.getElementById("id_time_entered").value = delTimeDate.toISOString().substring(11,16);
+			}
+			formEditer.style.display = "block";
+			deleteHolder.style.display = "none";
+		}
+	</script>
+	
+	{% endblock %}

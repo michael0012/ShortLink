@@ -1,0 +1,41 @@
+{% extends 'urls/base.html' %}
+	{% load static %}
+		{% block title %}Url Shortener{% endblock %}
+	{% block head %}
+		<link rel="stylesheet" href="{% static "urls/css/home_page.css" %}" >
+	{% endblock %}
+	{% block content %}
+		<main>
+			<div class="display_url_holder">
+				<h1 id="shorten_h1">{{ shorten_url | escape }}</h1>
+				<button id="shorten_button" onclick="copy_url()" >Copy Url</button>
+			</div>
+			<div class="modal" onclick="close_modal()">
+				<div class="modal-content">
+					<div class="modal-header">
+					  <span class="close" onclick="close_modal()">&times;</span>
+					</div>
+					<div class="modal-body">
+						<h1>Url has been copied to clipboard!</h1>
+					</div>
+				</div>
+			</div>
+		</main>
+		<script>
+			function copy_url(){
+				var url_short = document.getElementById("shorten_h1").innerText;
+				var node = document.createElement("INPUT");
+				document.getElementsByClassName("display_url_holder")[0].append(node);
+				node.value = url_short;
+				node.select();
+				document.execCommand("copy");
+				node.remove();
+				document.getElementsByClassName("modal")[0].style.display="flex";
+				return;
+			}
+			
+			function close_modal(){
+				document.getElementsByClassName("modal")[0].style.display="none";
+			}
+		</script>
+	{% endblock %}

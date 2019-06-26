@@ -1,0 +1,88 @@
+{% extends 'urls/base.html' %}
+	{% load static %}
+		{% block title %}Url Shortener{% endblock %}
+	{% block head %}
+		<link rel="stylesheet" href="{% static 'urls/css/dashboard.css' %}" >
+	{% endblock %}
+	{% block content %}
+	<main>
+		<h1 class="intro-url">Urls Shorten</h1>
+		<section class="table-holder">
+		
+			<div class="table-div">
+			
+				<div class="row-div">
+					<div class="item-div">
+						Full URL
+					</div>
+					
+					<div class="item-div">
+						Short Code
+					</div>
+					
+					<div class="item-div">
+						Time Created
+					</div>
+					
+					<div class="item-div">
+						End Time
+					</div>
+					
+					<div class="item-div">
+						Clicks
+					</div>
+					
+					<div class="item-div">
+						Is Active
+					</div>
+					
+				</div>
+				{% for url in urls %}
+					<div class="row-div row-div-link" onclick="location.href='/info/{{url.short_url}}';" style="cursor:pointer;">
+					
+						<div class="item-div">
+							{{url.full_url|escape}}
+						</div>
+						
+						<div class="item-div">
+							{{url.short_url}}
+						</div>
+						
+						<div class="item-div time-format">
+							{{url.time_created }}
+						</div>
+						
+						<div class="item-div time-format">
+							{{url.time_deactive}}
+						</div>
+						
+						<div class="item-div">
+							{{url.clicks}}
+						</div>
+						
+						<div class="item-div">
+							{{url.is_active}}
+						</div>
+						
+					</div>
+					
+				{% endfor %}
+			</div>
+			
+		</section>
+		<div style="text-align:center; padding:5px 10px;">
+			<a href="?format=json">Get info in JSON format</a>
+		</div>
+	</main>
+	<script>
+		(function(){
+			var time_elements = document.getElementsByClassName('time-format');
+			for(var i=0;i<time_elements.length;i++){
+				if(time_elements[i].innerText != "None")
+					time_elements[i].innerText = ( new Date(time_elements[i].innerText)).toString();
+			}
+			
+		})();
+	</script>
+	{% endblock %}
+	
